@@ -185,7 +185,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  - {fileID: 2100000, guid: 6a1143ee683302f4aa628c052723efc1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,9 +226,9 @@ Transform:
   m_GameObject: {fileID: 437315873}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.7734, y: 0, z: 5.97254}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -56, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1571923796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -245,8 +245,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::main
   Planets: {fileID: 1571923796}
-  density: 5
+  density: 100
   mass: 5
+  gravity: 0
+  volume: 0
+  forces: {x: 0, y: 0, z: 0}
+  g: {x: 0, y: 0, z: 0}
+  accelaration: {x: 0, y: 0, z: 0}
 --- !u!1 &580932902
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,10 +355,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 47
-  orthographic: 0
-  orthographic size: 5
+  far clip plane: 10000000
+  field of view: 15
+  orthographic: 1
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -377,8 +382,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580932902}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.28234348, y: 0.10448927, z: -0.030953573, w: -0.95310336}
-  m_LocalPosition: {x: 5.072869, y: 6.110584, z: -4.90529}
+  m_LocalRotation: {x: -0.35782528, y: 0.3125349, z: -0.12846912, w: -0.87050486}
+  m_LocalPosition: {x: 5.07287, y: 6.1105833, z: -4.9052906}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -573,9 +578,9 @@ Transform:
   m_GameObject: {fileID: 2059019186}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.7734, y: 0, z: 3.309}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1571923796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -592,8 +597,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::main
   Planets: {fileID: 1571923796}
-  density: 5
+  density: 1
   mass: 5
+  gravity: 0
+  volume: 0
+  forces: {x: 0, y: 0, z: 0}
+  g: {x: 0, y: 0, z: 0}
+  accelaration: {x: 0, y: 0, z: 0}
 --- !u!135 &2059019189
 SphereCollider:
   m_ObjectHideFlags: 0

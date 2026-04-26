@@ -42,22 +42,22 @@ public class Planet : MonoBehaviour
     Vector3 movement()
     {
         foreach (Transform child in Planets) {
-            if (child == this.gameObject){
-            }else
-            {
-
-                Debug.Log(child);
-                Debug.Log(this.gameObject);
+            if (child.gameObject != this.gameObject){
 
                 double distance = Vector3.Distance(child.position, transform.position);      
                 double g_value = gravity * mass * child.GetComponent<Planet>().mass / distance / distance;
+                Debug.Log(gravity);
+                Debug.Log(mass);
+                Debug.Log(child.GetComponent<Planet>().mass);
+                Debug.Log(distance);
+
 
                 Vector3 targetDir = child.position - transform.position;
                 float angle = Vector3.Angle(targetDir, transform.forward);
 
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
 
-                g = rotation * Vector3.forward * (float)g_value;
+                g += rotation * Vector3.forward * (float)g_value;
     
             }
         }
