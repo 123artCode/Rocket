@@ -1,38 +1,38 @@
 using System;
 using UnityEngine;
 
-public class main : MonoBehaviour
+public class Planet : MonoBehaviour
 {
-        public Transform Planets;
-
-
         [SerializeField]
+        public Transform Planets;
         public double density = 5;
-       
+
+
+        [HideInInspector]
+        public double mass = 5;
+        [HideInInspector]
+        public double gravity;
+        [HideInInspector]
+        public double volume;
+        [HideInInspector]
+        public Vector3 forces;
+        [HideInInspector]
+        public Vector3 g;
+        [HideInInspector]
+        public Vector3 accelaration;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {            
-        double gravity = 6.6743015 / 10000000;
-        double volume = 4/3 * 1/2 * transform.localScale.x * 1/2 * transform.localScale.y * 1/2 * transform.localScale.z * Math.PI;
-        double mass = density * volume;
+        gravity = 6.6743015 / 10000000;
+        volume = 0.1666666667 * transform.localScale.x * transform.localScale.y * transform.localScale.z * Math.PI;
+        mass = density * volume;
 
-        double[] forces;
-        double g;
+        forces = new Vector3(0, 0, 0);
+        g = new Vector3(0, 0, 0);
         
-        
-        foreach (Transform child in Planets) {
-            if (other.gameObject != this.gameObject):
-                g += gravity * mass * 
-        }
-        
-
-        
-        forces = forces.Append(g).ToArray();
-
-
     }
 
 
@@ -41,7 +41,40 @@ public class main : MonoBehaviour
 
     Vector3 movement()
     {
-        return new Vector3(0, 0, 0);
+        foreach (Transform child in Planets) {
+            if (child == this.gameObject){
+            }else
+            {
+
+                Debug.Log(child);
+                Debug.Log(this.gameObject);
+
+                double distance = Vector3.Distance(child.position, transform.position);      
+                double g_value = gravity * mass * child.GetComponent<Planet>().mass / distance / distance;
+
+                Vector3 targetDir = child.position - transform.position;
+                float angle = Vector3.Angle(targetDir, transform.forward);
+
+                Quaternion rotation = Quaternion.Euler(0, angle, 0);
+
+                g = rotation * Vector3.forward * (float)g_value;
+    
+            }
+        }
+        forces = g;
+        Debug.Log(g);
+
+
+        accelaration.x = forces.x/(float)mass;
+        accelaration.y = forces.y/(float)mass;
+        accelaration.z = forces.z/(float)mass;
+
+
+        forces = new Vector3(0, 0, 0);
+
+
+        return accelaration;
+
     }
 
 
