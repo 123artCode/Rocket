@@ -20,6 +20,8 @@ public class Planet : MonoBehaviour
         public Vector3 g;
         [HideInInspector]
         public Vector3 accelaration;
+        [HideInInspector]
+        public Vector3 g_vector;
 
 
 
@@ -41,6 +43,9 @@ public class Planet : MonoBehaviour
 
     Vector3 movement()
     {
+        forces = new Vector3(0, 0, 0);
+        g = new Vector3(0, 0, 0);
+
         foreach (Transform child in Planets) {
             if (child.gameObject != this.gameObject){
 
@@ -53,25 +58,24 @@ public class Planet : MonoBehaviour
 
 
                 Vector3 targetDir = child.position - transform.position;
-                float angle = Vector3.Angle(targetDir, transform.forward);
+                float angle = Vector3.Angle(targetDir, Vector3.forward);
 
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
 
-                g += rotation * Vector3.forward * (float)g_value;
+
+                g_vector = targetDir * (float) (g_value / targetDir.magnitude);
+                if (g_vector == (float) g_value * targetDir.normalized)
+                {
+                    print("ups");
+                }
+
+                g += g_vector;
     
             }
         }
         forces = g;
-        Debug.Log(g);
 
-
-        accelaration.x = forces.x/(float)mass;
-        accelaration.y = forces.y/(float)mass;
-        accelaration.z = forces.z/(float)mass;
-
-
-        forces = new Vector3(0, 0, 0);
-
+        accelaration = forces/(float)mass;
 
         return accelaration;
 
