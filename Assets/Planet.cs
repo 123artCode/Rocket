@@ -11,7 +11,7 @@ public class Planet : MonoBehaviour
         [HideInInspector]
         public double mass = 5;
         [HideInInspector]
-        public double gravity;
+        public double gravity = 6.6743015 / 10000000;
         [HideInInspector]
         public double volume;
         [HideInInspector]
@@ -22,18 +22,16 @@ public class Planet : MonoBehaviour
         public Vector3 accelaration;
         [HideInInspector]
         public Vector3 g_vector;
+        public Vector3 velocity;
+        public float max_velocity = 1;
+
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {            
+    {
         gravity = 6.6743015 / 10000000;
-        volume = 0.1666666667 * transform.localScale.x * transform.localScale.y * transform.localScale.z * Math.PI;
-        mass = density * volume;
-
-        forces = new Vector3(0, 0, 0);
-        g = new Vector3(0, 0, 0);
         
     }
 
@@ -46,29 +44,28 @@ public class Planet : MonoBehaviour
         forces = new Vector3(0, 0, 0);
         g = new Vector3(0, 0, 0);
 
+
+        volume = 0.1666666667 * transform.localScale.x * transform.localScale.y * transform.localScale.z * Math.PI;
+        mass = density * volume;
+
         foreach (Transform child in Planets) {
             if (child.gameObject != this.gameObject){
 
                 double distance = Vector3.Distance(child.position, transform.position);      
                 double g_value = gravity * mass * child.GetComponent<Planet>().mass / distance / distance;
-                Debug.Log(gravity);
-                Debug.Log(mass);
-                Debug.Log(child.GetComponent<Planet>().mass);
-                Debug.Log(distance);
 
 
                 Vector3 targetDir = child.position - transform.position;
-                float angle = Vector3.Angle(targetDir, Vector3.forward);
-
-                Quaternion rotation = Quaternion.Euler(0, angle, 0);
-
 
                 g_vector = targetDir * (float) (g_value / targetDir.magnitude);
                 if (g_vector == (float) g_value * targetDir.normalized)
                 {
                     print("ups");
                 }
-
+                if (child.gameObject.bounds.min < transform.bounds.min)
+                {
+                    if (child.gameObject.bounds.max)
+                } 
                 g += g_vector;
     
             }
@@ -76,9 +73,9 @@ public class Planet : MonoBehaviour
         forces = g;
 
         accelaration = forces/(float)mass;
-
-        return accelaration;
-
+        velocity += accelaration * Time.deltaTime;
+        velocity = Vector3.ClampMagnitude(velocity, max_velocity);
+        return velocity;
     }
 
 
@@ -86,7 +83,8 @@ public class Planet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + movement() * Time.deltaTime ;
+
+        transform.position = transform.position + movement();
     }
 
 }
